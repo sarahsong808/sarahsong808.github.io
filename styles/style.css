@@ -181,6 +181,12 @@ img {
   color: #cc3300;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
+}
+
+#first-cat-wiki-button:hover {
+  color: #cab88e;
+  background-color: #cc3300;
 }
 
 #second-cat-wiki-button {
@@ -191,6 +197,12 @@ img {
   color: #f8fdfc;
   border: 1px solid;
   font-size: 14px;
+  cursor: pointer;
+}
+
+#second-cat-wiki-button:hover {
+  color: #cc3300;
+  background-color: #f8fdfc;
 }
 
 /* mobile view */
