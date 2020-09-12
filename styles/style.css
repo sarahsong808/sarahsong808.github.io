@@ -1,0 +1,239 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 50px;
+}
+
+#second-cat-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: 35%;
+  position: relative;
+}
+
+#second-cat-image:before {
+  content: "";
+  background: #cab88e;
+  opacity: 0.6;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#first-cat-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: 35%;
+  position: relative;
+}
+
+#first-cat-image:before {
+  content: "";
+  background: #cab88e;
+  opacity: 0.6;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#first-cat-name,
+#second-cat-name {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #363024;
+}
+
+.cats-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+}
+
+.first-cat-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40%;
+  height: 95vh;
+  margin-right: 50px;
+}
+
+.second-cat-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40%;
+  height: 95vh;
+}
+
+.first-cat-info {
+  background-color: #cab88e;
+  height: 50vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 30px;
+}
+
+.second-cat-info {
+  background-color: #f8fdfc;
+  height: 50vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 30px;
+}
+
+img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 45vh;
+}
+
+#first-cat-origin {
+  color: #f8fdfc;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+#second-cat-origin {
+  color: #00aa9e;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+#first-cat-description,
+#second-cat-description {
+  font-size: 16px;
+  line-height: 1.7em;
+  color: #363024;
+  margin-bottom: 40px;
+}
+
+#first-cat-wiki-button {
+  width: 60%;
+  height: 8vh;
+  background-color: #cab88e;
+  border: 4px solid #cc3300;
+  color: #cc3300;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#second-cat-wiki-button {
+  width: 60%;
+  height: 8vh;
+  font-weight: bold;
+  background-color: #cc3300;
+  color: #f8fdfc;
+  border: 1px solid;
+  font-size: 14px;
+}
+
+/* mobile view */
+@media only screen and (max-width: 700px) {
+  #first-cat-description,
+  #second-cat-description {
+    font-size: 13px;
+  }
+  #first-cat-name,
+  #second-cat-name {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  .cats-wrapper {
+    display: block;
+  }
+  .first-cat-container {
+    margin-right: 40px;
+    width: 100%;
+    height: 70vh;
+    margin-bottom: 40px;
+  }
+  .second-cat-container {
+    width: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    height: 70vh;
+    margin-bottom: 40px;
+  }
+  .first-cat-info,
+  .second-cat-info {
+    height: 30vh;
+  }
+  #first-cat-origin,
+  #second-cat-origin {
+    margin-bottom: 30px;
+  }
+  #first-cat-wiki-button,
+  #second-cat-wiki-button {
+    font-size: 12px;
+    height: 4vh;
+  }
+}
+/*# sourceMappingURL=style.css.map */
