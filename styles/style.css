@@ -9,7 +9,7 @@ body {
   padding: 30px;
 }
 
-#second-cat-image {
+.second-cat-image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -25,7 +25,7 @@ body {
   position: relative;
 }
 
-#second-cat-image:before {
+.second-cat-image:before {
   content: "";
   background: #cab88e;
   opacity: 0.6;
@@ -34,7 +34,7 @@ body {
   height: 100%;
 }
 
-#first-cat-image {
+.first-cat-image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -50,7 +50,7 @@ body {
   position: relative;
 }
 
-#first-cat-image:before {
+.first-cat-image:before {
   content: "";
   background: #cab88e;
   opacity: 0.6;
@@ -59,12 +59,12 @@ body {
   height: 100%;
 }
 
-#first-cat-name,
-#second-cat-name {
+.first-cat-name,
+.second-cat-name {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #363024;
+  color: 0.36302;
 }
 
 .cats-wrapper {
@@ -153,27 +153,27 @@ img {
   height: 45vh;
 }
 
-#first-cat-origin {
+.first-cat-origin {
   color: #f8fdfc;
   font-size: 12px;
   margin-bottom: 10px;
 }
 
-#second-cat-origin {
+.second-cat-origin {
   color: #00aa9e;
   font-size: 12px;
   margin-bottom: 10px;
 }
 
-#first-cat-description,
-#second-cat-description {
+.first-cat-description,
+.second-cat-description {
   font-size: 16px;
   line-height: 1.7em;
-  color: #363024;
+  color: 0.36302;
   margin-bottom: 10px;
 }
 
-#first-cat-wiki-button {
+.first-cat-wiki-button {
   width: 55%;
   height: 7vh;
   background-color: #cab88e;
@@ -185,12 +185,12 @@ img {
   outline: none;
 }
 
-#first-cat-wiki-button:hover {
+.first-cat-wiki-button:hover {
   color: #cab88e;
   background-color: #cc3300;
 }
 
-#second-cat-wiki-button {
+.second-cat-wiki-button {
   width: 55%;
   height: 7vh;
   font-weight: bold;
@@ -202,7 +202,7 @@ img {
   outline: none;
 }
 
-#second-cat-wiki-button:hover {
+.second-cat-wiki-button:hover {
   color: #cc3300;
   background-color: #f8fdfc;
 }
@@ -212,12 +212,12 @@ img {
   body {
     padding: 10px;
   }
-  #first-cat-description,
-  #second-cat-description {
+  .first-cat-description,
+  .second-cat-description {
     font-size: 13px;
   }
-  #first-cat-name,
-  #second-cat-name {
+  .first-cat-name,
+  .second-cat-name {
     font-size: 20px;
     margin-bottom: 10px;
   }
@@ -247,12 +247,12 @@ img {
     height: 45vh;
     margin-bottom: 15px;
   }
-  #first-cat-origin,
-  #second-cat-origin {
+  .first-cat-origin,
+  .second-cat-origin {
     margin-bottom: 8px;
   }
-  #first-cat-wiki-button,
-  #second-cat-wiki-button {
+  .first-cat-wiki-button,
+  .second-cat-wiki-button {
     font-size: 12px;
     height: 4vh;
     border: 1px solid #cc3300;
