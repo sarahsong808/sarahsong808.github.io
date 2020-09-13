@@ -16,6 +16,15 @@ function ajax_get(url, callback) {
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }
+
+//acur
+//amis
+
+const LAYOUT_TYPES = {
+  IMAGE_TOP: "IMAGE_TOP",
+  IMAGE_BOTTOM: "IMAGE_BOTTOM"
+};
+
 function createFirstCatContainer(id) {
   ajax_get(
     `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
@@ -39,53 +48,75 @@ function createFirstCatContainer(id) {
       wiki.onclick = function (event) {
         window.location.href = dataBreeds["wikipedia_url"];
       };
+      const parentNode = document.querySelector(".cats-wrapper");
+      // createCatContainer(data[0], LAYOUT_TYPES.IMAGE_TOP, parentNode);
     }
   );
 }
 
-//acur
-//amis
-
-const LAYOUT_TYPES = {
-  IMAGE_TOP: "IMAGE_TOP",
-  IMAGE_BOTTOM: "IMAGE_BOTTOM"
-};
-
-function createCatContainer(apiPayload, layoutType, parentNode) {
-  const { origin, name, description, wikipedia_url } = apiPayload;
+function createCatContainer(breedsApiPayload, layoutType, parentNode) {
+  const { url, breeds } = breedsApiPayload;
+  console.log(breeds);
+  const { origin, name, description } = breeds[0];
   switch (layoutType) {
-    case LAYOUT_TYPES.IMAGE_TOP: {
-      const catContainerFragment = new DocumentFragment();
-      const catContainer = Object.assign(document.createElement("div"), {
-        className: "first-cat-container"
-      });
-      const catOrigin = Object.assign(document.createElement("div"), {
-        textContent: origin,
-        className: "first-cat-origin"
-      });
-      const catName = Object.assign(document.createElement("div"), {
-        textContent: name,
-        className: "first-cat-name"
-      });
-      const domNodes = [catOrigin, catName];
-      domNodes.forEach(node => catContainer.appendChild(node));
-      catContainerFragment.appendChild(catContainer);
-      parentNode.appendChild(catContainer);
-      break;
-    }
+    // case LAYOUT_TYPES.IMAGE_TOP: {
+    //   const catContainerFragment = new DocumentFragment();
+    //   const catContainer = Object.assign(document.createElement("div"), {
+    //     className: "first-cat-container"
+    //   });
+    //   const catOrigin = Object.assign(document.createElement("div"), {
+    //     textContent: origin,
+    //     className: "first-cat-origin"
+    //   });
+    //   const catName = Object.assign(document.createElement("div"), {
+    //     textContent: name,
+    //     className: "first-cat-name"
+    //   });
+    //   const catDescription = Object.assign(document.createElement("div"), {
+    //     textContent: description,
+    //     className: "first-cat-description"
+    //   });
+    //   const domNodes = [catOrigin, catName, catDescription];
+    //   domNodes.forEach(node => catContainer.appendChild(node));
+    //   catContainerFragment.appendChild(catContainer);
+    //   parentNode.appendChild(catContainer);
+    //   break;
+    // }
     case LAYOUT_TYPES.IMAGE_BOTTOM: {
       const catContainerFragment = new DocumentFragment();
       const catContainer = Object.assign(document.createElement("div"), {
         className: "second-cat-container"
       });
+      const catInfo = Object.assign(document.createElement("div"), {
+        className: "second-cat-info"
+      });
       const catOrigin = Object.assign(document.createElement("div"), {
         textContent: origin,
         className: "second-cat-origin"
       });
-      const domNodes = [catOrigin];
-      domNodes.forEach(node => catContainer.appendChild(node));
+      const catName = Object.assign(document.createElement("div"), {
+        textContent: name,
+        className: "second-cat-name"
+      });
+      const catDescription = Object.assign(document.createElement("div"), {
+        textContent: description,
+        className: "second-cat-description"
+      });
+      const imgDiv = Object.assign(document.createElement("div"), {
+        className: "second-cat-image"
+      });
+      const img_URL = Object.assign(document.createElement("img"), {
+        src: url
+      });
+      // img_URL.src=
+      const domNodes = [catOrigin, catName, catDescription];
+
+      domNodes.forEach(node => catInfo.appendChild(node));
+      imgDiv.appendChild(img_URL);
+      catContainer.appendChild(catInfo);
+      catContainer.appendChild(imgDiv);
       catContainerFragment.appendChild(catContainer);
-      parentNode.appendChild(catContainer);
+      parentNode.appendChild(catContainerFragment);
       break;
     }
     default: {
@@ -98,28 +129,28 @@ function createSecondCatContainer(id) {
   ajax_get(
     `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
     function (data) {
-      const dataBreeds = data[0]["breeds"][0];
-      console.log("hi from 2", dataBreeds);
-      //origin
-      document.getElementsByClassName("second-cat-origin")[0].innerHTML =
-        dataBreeds["origin"];
-      //name
-      document.getElementsByClassName("second-cat-name")[0].innerHTML =
-        dataBreeds["name"];
-      //image
-      var html =
-        '<img src="' + data[0]["url"] + '" height="275vh" alt="cat image">';
-      document.getElementsByClassName("second-cat-image")[0].innerHTML = html;
-      //description
-      document.getElementsByClassName("second-cat-description")[0].innerHTML =
-        dataBreeds["description"];
+      // const dataBreeds = data[0]["breeds"][0];
+      // console.log("hi from 2", dataBreeds);
+      // //origin
+      // document.getElementsByClassName("second-cat-origin")[0].innerHTML =
+      //   dataBreeds["origin"];
+      // //name
+      // document.getElementsByClassName("second-cat-name")[0].innerHTML =
+      //   dataBreeds["name"];
+      // //image
+      // var html =
+      //   '<img src="' + data[0]["url"] + '" height="275vh" alt="cat image">';
+      // document.getElementsByClassName("second-cat-image")[0].innerHTML = html;
+      // //description
+      // document.getElementsByClassName("second-cat-description")[0].innerHTML =
+      //   dataBreeds["description"];
       //wiki url
-      var wiki = document.getElementsByClassName("second-cat-wiki-button");
-      wiki.onclick = function (event) {
-        window.location.href = dataBreeds["wikipedia_url"];
-      };
+      // var wiki = document.getElementsByClassName("second-cat-wiki-button");
+      // wiki.onclick = function (event) {
+      //   window.location.href = dataBreeds["wikipedia_url"];
+      // };
       const parentNode = document.querySelector(".cats-wrapper");
-      createCatContainer(dataBreeds, LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
+      createCatContainer(data[0], LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
     }
   );
 }
