@@ -26,6 +26,8 @@
  * - Get properties from apiPayload
  * - Create DOM mpdes from apiPayload
  * - Insert DOM Nodes
+ * what happens if api fails -- implement retry, after 3 retries, create a page that says please reload the page
+ * add addEventListener to button with a function called on initial load
  */
 
 function ajax_get(url, callback) {
@@ -51,10 +53,11 @@ const LAYOUT_TYPES = {
   IMAGE_TOP: "IMAGE_TOP",
   IMAGE_BOTTOM: "IMAGE_BOTTOM"
 };
+const wikipediaRedirection = wikipedia_url =>
+  (document.location.href = wikipedia_url);
 
 function createCatContainer(breedsApiPayload, layoutType, parentNode) {
   const { url, breeds } = breedsApiPayload;
-  console.log(breeds);
   const { origin, name, description, wikipedia_url } = breeds[0];
   switch (layoutType) {
     case LAYOUT_TYPES.IMAGE_TOP: {
@@ -79,13 +82,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
       });
 
       const catWikiButton = Object.assign(document.createElement("button"), {
-        onclick: function (event) {
-          window.location.href = wikipedia_url;
-        },
         className: "first-cat-wiki-button",
         textContent: "Meow Info"
       });
-
+      catWikiButton.addEventListener("click", wikipediaRedirection());
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "first-cat-image"
       });
@@ -131,7 +131,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
         className: "second-cat-wiki-button",
         textContent: "More Infur"
       });
-
+      catWikiButton.addEventListener("click", wikipediaRedirection());
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "second-cat-image"
       });
