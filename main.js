@@ -1,3 +1,33 @@
+/**
+ * - Initial Load
+ *  = What doe sthe website look like before ajax?
+ * - After Ajax Call
+ *  - Create DOM Nodes
+ *  - Insert DOM Nodes
+ *
+ * On inital load:
+ * - Set loading variable to true
+ * - do Promise.all on all ajax calls
+ * - User gets blank screen until after 1000ms, then they get a loading screen
+ *
+ * Promise.all([catFetch('acur'), catFetch('amis'))])
+ * - This fetches results for cat API
+ *
+ * After Promise.all resolves
+ * - Set loading to false
+ * - Since loading is false. it starts building the DOM
+ *
+ * Building the DOM
+ * - API: function createContainer(apiPayload, layoutType)
+ * layoutType = IMAGE_TOP | IMAGE_BOTTOM
+ * api_payload: results from cat API
+ *
+ * createContainer
+ * - Get properties from apiPayload
+ * - Create DOM mpdes from apiPayload
+ * - Insert DOM Nodes
+ */
+
 function ajax_get(url, callback) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
@@ -16,9 +46,6 @@ function ajax_get(url, callback) {
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }
-
-//acur
-//amis
 
 const LAYOUT_TYPES = {
   IMAGE_TOP: "IMAGE_TOP",
@@ -128,53 +155,33 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
   }
 }
 
-function createFirstCatContainer(id) {
-  ajax_get(
-    `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
-    function (data) {
-      const parentNode = document.querySelector(".cats-wrapper");
-      createCatContainer(data[0], LAYOUT_TYPES.IMAGE_TOP, parentNode);
-    }
-  );
-}
-function createSecondCatContainer(id) {
-  ajax_get(
-    `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
-    function (data) {
-      const parentNode = document.querySelector(".cats-wrapper");
-      createCatContainer(data[0], LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
-    }
-  );
+function catFetch(id, layoutType) {
+  return new Promise((resolve, reject) => {
+    ajax_get(
+      `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
+      function (data) {
+        resolve(data[0]);
+      }
+    );
+  });
 }
 
-createFirstCatContainer("acur");
-createSecondCatContainer("amis");
-/**
- * - Initial Load
- *  = What doe sthe website look like before ajax?
- * - After Ajax Call
- *  - Create DOM Nodes
- *  - Insert DOM Nodes
- *
- * On inital load:
- * - Set loading variable to true
- * - do Promise.all on all ajax calls
- * - User gets blank screen until after 1000ms, then they get a loading screen
- *
- * Promise.all([catFetch('acur'), catFetch('amis'))])
- * - This fetches results for cat API
- *
- * After Promise.all resolves
- * - Set loading to false
- * - Since loading is false. it starts building the DOM
- *
- * Building the DOM
- * - API: function createContainer(apiPayload, layoutType)
- * layoutType = IMAGE_TOP | IMAGE_BOTTOM
- * api_payload: results from cat API
- *
- * createContainer
- * - Get properties from apiPayload
- * - Create DOM mpdes from apiPayload
- * - Insert DOM Nodes
- */
+let loading = true;
+Promise.all([
+  catFetch("acur", LAYOUT_TYPES.IMAGE_TOP),
+  catFetch("amis", LAYOUT_TYPES.IMAGE_BOTTOM)
+]).then(result => {
+  const parentNode = document.querySelector(".cats-wrapper");
+  console.log({ parentNode });
+  createCatContainer(result[0], LAYOUT_TYPES.IMAGE_TOP, parentNode);
+  createCatContainer(result[1], LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
+  loading = false;
+});
+
+setTimeout(() => {
+  if (loading) {
+    const loadingPage = Object.assign(document.createElement("div"), {
+      textContent: "Loading..."
+    });
+  }
+}, 1000);
