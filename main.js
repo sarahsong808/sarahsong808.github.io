@@ -65,8 +65,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
       const img_URL = Object.assign(document.createElement("img"), {
         src: url
       });
+      const innerInfoWrapper = document.createElement("div");
       const domNodes = [catOrigin, catName, catDescription, catWikiButton];
-      domNodes.forEach(node => catInfo.appendChild(node));
+      domNodes.forEach(node => innerInfoWrapper.appendChild(node));
+      catInfo.appendChild(innerInfoWrapper);
       imgDiv.appendChild(img_URL);
       catContainer.appendChild(imgDiv);
       catContainer.appendChild(catInfo);
@@ -100,7 +102,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
           window.location.href = wikipedia_url;
         },
         className: "second-cat-wiki-button",
-        textContent: "Meow Info"
+        textContent: "More Infur"
       });
 
       const imgDiv = Object.assign(document.createElement("div"), {
