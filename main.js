@@ -125,9 +125,6 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
       });
 
       const catWikiButton = Object.assign(document.createElement("button"), {
-        onclick: function (event) {
-          window.location.href = wikipedia_url;
-        },
         className: "second-cat-wiki-button",
         textContent: "More Infur"
       });
