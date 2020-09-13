@@ -53,8 +53,8 @@ const LAYOUT_TYPES = {
   IMAGE_TOP: "IMAGE_TOP",
   IMAGE_BOTTOM: "IMAGE_BOTTOM"
 };
-const wikipediaRedirection = wikipedia_url =>
-  (document.location.href = wikipedia_url);
+const wikipediaRedirection = event =>
+  (document.location.href = event.target["data-wiki-url"]);
 
 function createCatContainer(breedsApiPayload, layoutType, parentNode) {
   const { url, breeds } = breedsApiPayload;
@@ -83,9 +83,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
 
       const catWikiButton = Object.assign(document.createElement("button"), {
         className: "first-cat-wiki-button",
-        textContent: "Meow Info"
+        textContent: "Meow Info",
+        "data-wiki-url": wikipedia_url
       });
-      catWikiButton.addEventListener("click", wikipediaRedirection());
+      parentNode.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "first-cat-image"
       });
@@ -126,9 +127,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
 
       const catWikiButton = Object.assign(document.createElement("button"), {
         className: "second-cat-wiki-button",
-        textContent: "More Infur"
+        textContent: "More Infur",
+        "data-wiki-url": wikipedia_url
       });
-      catWikiButton.addEventListener("click", wikipediaRedirection());
+      parentNode.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "second-cat-image"
       });
