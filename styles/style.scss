@@ -9,6 +9,7 @@ $catImageSize: 35%;
 $primaryFontColor: 0.363024;
 $catWikiButtonHeight: 7vh;
 $secondaryColorRed: #cc3300;
+$tertiaryColorWhite: #f8fdfc;
 * {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
@@ -94,7 +95,7 @@ body {
   padding: 30px;
 }
 .second-cat-info {
-  background-color: #f8fdfc;
+  background-color: $tertiaryColorWhite;
   height: 50vh;
   width: 100%;
   display: flex;
@@ -107,7 +108,7 @@ img {
   height: 45vh;
 }
 .first-cat-origin {
-  color: #f8fdfc;
+  color: $tertiaryColorWhite;
   font-size: $catOriginSize;
   margin-bottom: 10px;
 }
@@ -134,11 +135,10 @@ img {
   font-size: $buttonFontSize;
   cursor: pointer;
   outline: none;
-}
-
-.first-cat-wiki-button:hover {
-  color: $primaryColorTan;
-  background-color: $secondaryColorRed;
+  &:hover {
+    color: $primaryColorTan;
+    background-color: $secondaryColorRed;
+  }
 }
 
 .second-cat-wiki-button {
@@ -146,17 +146,17 @@ img {
   height: $catWikiButtonHeight;
   font-weight: bold;
   background-color: $secondaryColorRed;
-  color: #f8fdfc;
+  color: $tertiaryColorWhite;
   border: 1px solid;
   font-size: $buttonFontSize;
   cursor: pointer;
   outline: none;
+  &:hover {
+    color: $secondaryColorRed;
+    background-color: $tertiaryColorWhite;
+  }
 }
 
-.second-cat-wiki-button:hover {
-  color: $secondaryColorRed;
-  background-color: #f8fdfc;
-}
 /* mobile view */
 @media only screen and (max-width: 700px) {
   body {

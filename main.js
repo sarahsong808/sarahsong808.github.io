@@ -1,21 +1,55 @@
-function ajax_get(url, callback) {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      console.log("responseText:" + xmlhttp.responseText);
-      try {
-        var data = JSON.parse(xmlhttp.responseText);
-      } catch (err) {
-        console.log(err.message + " in " + xmlhttp.responseText);
-        return;
-      }
-      callback(data);
-    }
-  };
+//GRAPHQL WORKING QUERIES
+// const { ApolloServer, gql } = require("apollo-server");
+// const fetch = require("node-fetch");
+// // A schema is a collection of type definitions (hence "typeDefs")
+// // that together define the "shape" of queries that are executed against
+// // your data.
+// const typeDefs = gql`
+//   type Query {
+//     getBreed(id: String): [Breeds]
+//   }
 
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
-}
+//   type Breeds {
+//     breeds: [NestedObject]
+//     url: String
+//   }
+
+//   type NestedObject {
+//     id: String
+//     name: String
+//     vetstreet_url: String
+//     origin: String
+//     description: String
+//     wikipedia_url: String
+//   }
+// `;
+
+// // Resolvers define the technique for fetching the types defined in the
+// // schema. This resolver retrieves books from the "books" array above.
+// const resolvers = {
+//   //   Image: {
+//   //     url: parent => {
+//   //         const reponse = await fetch(url)
+//   //     }
+//   //   },
+//   Query: {
+//     getBreed: async (_, { id }) => {
+//       const response = await fetch(
+//         `https://api.thecatapi.com/v1/images/search?breed_id=${id}`
+//       );
+//       return response.json();
+//     }
+//   }
+// };
+
+// // The ApolloServer constructor requires two parameters: your schema
+// // definition and your set of resolvers.
+// const server = new ApolloServer({ typeDefs, resolvers });
+
+// // The `listen` method launches a web server.
+// server.listen().then(({ url }) => {
+//   console.log(`🚀  Server ready at ${url}`);
+// });
 
 const LAYOUT_TYPES = {
   IMAGE_TOP: "IMAGE_TOP",
@@ -51,10 +85,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
 
       const catWikiButton = Object.assign(document.createElement("button"), {
         className: "first-cat-wiki-button",
-        textContent: "Meow Info",
+        textContent: "MEOW INFO",
         "data-wiki-url": wikipedia_url
       });
-      parentNode.addEventListener("click", wikipediaRedirection);
+      catWikiButton.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "first-cat-image"
       });
@@ -95,10 +129,10 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
 
       const catWikiButton = Object.assign(document.createElement("button"), {
         className: "second-cat-wiki-button",
-        textContent: "More Infur",
+        textContent: "MORE INFUR",
         "data-wiki-url": wikipedia_url
       });
-      parentNode.addEventListener("click", wikipediaRedirection);
+      catWikiButton.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
         className: "second-cat-image"
       });
@@ -122,33 +156,37 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
   }
 }
 
-function catFetch(id, layoutType) {
-  return new Promise((resolve, reject) => {
-    ajax_get(
-      `https://api.thecatapi.com/v1/images/search?breed_ids=${id}`,
-      function (data) {
-        resolve(data[0]);
+function catFetch(id, retries = 3, backoff = 300) {
+  const retryCodes = [408, 500, 502, 503, 504, 522, 524];
+  return fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${id}`)
+    .then(res => {
+      if (res.ok) return res.json();
+
+      if (retries > 0 && retryCodes.includes(res.status)) {
+        setTimeout(() => {
+          return catFetch(url, options, retries - 1, backoff * 2);
+        }, backoff);
+      } else {
+        throw new Error(res);
       }
-    );
-  });
+    })
+    .catch(console.error);
 }
 
 let loading = true;
-Promise.all([
-  catFetch("acur", LAYOUT_TYPES.IMAGE_TOP),
-  catFetch("amis", LAYOUT_TYPES.IMAGE_BOTTOM)
-]).then(result => {
+Promise.all([catFetch("acur"), catFetch("amis")]).then(result => {
   const parentNode = document.querySelector(".cats-wrapper");
-  console.log({ parentNode });
-  createCatContainer(result[0], LAYOUT_TYPES.IMAGE_TOP, parentNode);
-  createCatContainer(result[1], LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
+  createCatContainer(result[0][0], LAYOUT_TYPES.IMAGE_TOP, parentNode);
+  createCatContainer(result[1][0], LAYOUT_TYPES.IMAGE_BOTTOM, parentNode);
   loading = false;
 });
 
-setTimeout(() => {
+let loadingTimer = setTimeout(() => {
   if (loading) {
     const loadingPage = Object.assign(document.createElement("div"), {
       textContent: "Loading..."
     });
+    const parentNode = document.querySelector(".cats-wrapper");
+    parentNode.appendChild(loadingPage);
   }
 }, 1000);
