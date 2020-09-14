@@ -1,56 +1,3 @@
-//GRAPHQL WORKING QUERIES
-// const { ApolloServer, gql } = require("apollo-server");
-// const fetch = require("node-fetch");
-// // A schema is a collection of type definitions (hence "typeDefs")
-// // that together define the "shape" of queries that are executed against
-// // your data.
-// const typeDefs = gql`
-//   type Query {
-//     getBreed(id: String): [Breeds]
-//   }
-
-//   type Breeds {
-//     breeds: [NestedObject]
-//     url: String
-//   }
-
-//   type NestedObject {
-//     id: String
-//     name: String
-//     vetstreet_url: String
-//     origin: String
-//     description: String
-//     wikipedia_url: String
-//   }
-// `;
-
-// // Resolvers define the technique for fetching the types defined in the
-// // schema. This resolver retrieves books from the "books" array above.
-// const resolvers = {
-//   //   Image: {
-//   //     url: parent => {
-//   //         const reponse = await fetch(url)
-//   //     }
-//   //   },
-//   Query: {
-//     getBreed: async (_, { id }) => {
-//       const response = await fetch(
-//         `https://api.thecatapi.com/v1/images/search?breed_id=${id}`
-//       );
-//       return response.json();
-//     }
-//   }
-// };
-
-// // The ApolloServer constructor requires two parameters: your schema
-// // definition and your set of resolvers.
-// const server = new ApolloServer({ typeDefs, resolvers });
-
-// // The `listen` method launches a web server.
-// server.listen().then(({ url }) => {
-//   console.log(`🚀  Server ready at ${url}`);
-// });
-
 const LAYOUT_TYPES = {
   IMAGE_TOP: "IMAGE_TOP",
   IMAGE_BOTTOM: "IMAGE_BOTTOM"
@@ -65,7 +12,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
     case LAYOUT_TYPES.IMAGE_TOP: {
       const catContainerFragment = new DocumentFragment();
       const catContainer = Object.assign(document.createElement("div"), {
-        className: "first-cat-container"
+        className: "first-cat-container flex-center"
       });
       const catInfo = Object.assign(document.createElement("div"), {
         className: "first-cat-info"
@@ -90,7 +37,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
       });
       catWikiButton.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
-        className: "first-cat-image"
+        className: "first-cat-image flex-center"
       });
       const img_URL = Object.assign(document.createElement("img"), {
         src: url
@@ -109,7 +56,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
     case LAYOUT_TYPES.IMAGE_BOTTOM: {
       const catContainerFragment = new DocumentFragment();
       const catContainer = Object.assign(document.createElement("div"), {
-        className: "second-cat-container"
+        className: "second-cat-container flex-center"
       });
       const catInfo = Object.assign(document.createElement("div"), {
         className: "second-cat-info"
@@ -134,7 +81,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
       });
       catWikiButton.addEventListener("click", wikipediaRedirection);
       const imgDiv = Object.assign(document.createElement("div"), {
-        className: "second-cat-image"
+        className: "second-cat-image flex-center"
       });
       const img_URL = Object.assign(document.createElement("img"), {
         src: url
@@ -155,7 +102,7 @@ function createCatContainer(breedsApiPayload, layoutType, parentNode) {
     }
   }
 }
-
+//fetch data from api with retries if fail
 function catFetch(id, retries = 3, backoff = 300) {
   const retryCodes = [408, 500, 502, 503, 504, 522, 524];
   return fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${id}`)
@@ -190,3 +137,52 @@ let loadingTimer = setTimeout(() => {
     parentNode.appendChild(loadingPage);
   }
 }, 1000);
+
+/**GRAPHQL WORKING QUERIES & SERVER SET UP 
+const { ApolloServer, gql } = require("apollo-server");
+const fetch = require("node-fetch");
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = gql`
+  type Query {
+    getBreed(id: String): [Breeds]
+  }
+
+  type Breeds {
+    breeds: [NestedObject]
+    url: String
+  }
+
+  type NestedObject {
+    id: String
+    name: String
+    vetstreet_url: String
+    origin: String
+    description: String
+    wikipedia_url: String
+  }
+`;
+
+// Resolvers define the technique for fetching the types defined in the
+// schema. 
+const resolvers = {
+  Query: {
+    getBreed: async (_, { id }) => {
+      const response = await fetch(
+        `https://api.thecatapi.com/v1/images/search?breed_id=${id}`
+      );
+      return response.json();
+    }
+  }
+};
+
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// The `listen` method launches a web server.
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
+**/

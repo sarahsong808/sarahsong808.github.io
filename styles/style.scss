@@ -19,9 +19,6 @@ body {
   padding: 30px;
 }
 .second-cat-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   width: 100%;
   min-height: $catImageSize;
@@ -36,9 +33,6 @@ body {
   }
 }
 .first-cat-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   width: 100%;
   min-height: $catImageSize;
@@ -52,6 +46,13 @@ body {
     height: 100%;
   }
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .first-cat-name,
 .second-cat-name {
   font-size: $catNameSize;
@@ -61,28 +62,19 @@ body {
 }
 
 .cats-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 110vh;
   top: 50%;
   left: 50%;
   padding: 20px;
 }
 .first-cat-container {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 40%;
   height: $catContainer;
   margin-right: 50px;
 }
 .second-cat-container {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 40%;
   height: $catContainer;
 }
