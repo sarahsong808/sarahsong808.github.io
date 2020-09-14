@@ -128,7 +128,7 @@ Promise.all([catFetch("acur"), catFetch("amis")]).then(result => {
   loading = false;
 });
 
-let loadingTimer = setTimeout(() => {
+setTimeout(() => {
   if (loading) {
     const loadingPage = Object.assign(document.createElement("div"), {
       textContent: "Loading..."
